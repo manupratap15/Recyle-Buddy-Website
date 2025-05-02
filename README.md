@@ -1,76 +1,144 @@
-# Recycle Buddy Web Portal
+# ♻️ Recycle Buddy Web Portal
 
-This is the website for Recycle Buddy App we created in GRU Fest in 2025, This is a HTML/CSS website and we created the app in React.
-
-A simple web portal for waste management facilities to view user-submitted waste reports, schedule pickups, and manage their operations.
-
-## Table of Contents
-
-* [Overview](#overview)
-* [Features](#features)
-* [Project Structure](#project-structure)
-* [Customization](#customization)
-* [Deployment](#deployment)
-
-## Overview
-
-This is the web-based dashboard for waste management facilities in a larger recycling system. It allows authorized personnel to log in, view maps of reported waste, create and manage pickup schedules, and track pickup progress.
-
-## Features
-
-* **Facility Login**: Secure login page for facilities.
-* **Waste Report Map**: Visualize user-submitted waste locations on a map.
-* **Schedule Pickups**: Set pickup date, time, and assign vehicles.
-* **Track Pickups**: Monitor scheduled pickups and mark them complete.
-* **Manage Profile**: Edit and update facility details.
-
-## Project Structure
-
-```plaintext
-Recycle New/
-├── index.html                  # Homepage (optional landing or redirect to login)
-├── login.html                  # Facility login form
-├── map-view.html               # Waste location map view
-├── facility-profile.html       # Facility profile management
-├── schedule-pickup.html        # Page for creating pickup schedule
-├── my-scheduled-pickups.html   # List of scheduled pickups
-├── track-pickup.html           # Pickup tracking dashboard
-├── styles.css                  # Main stylesheet
-```
-
-## Customization
-
-### Changing Branding
-
-* **Update Titles and Logos**: Modify text, titles, and any logos directly in HTML.
-* **CSS Styling**: Edit `styles.css` to reflect your preferred colors, fonts, and layout.
-
-### Integrating a Backend
-
-To make pages functional:
-
-* Connect `login.html` form to your auth system (e.g., Firebase, Supabase, custom backend).
-* Fetch dynamic data in `map-view.html`, `my-scheduled-pickups.html`, and others using JavaScript and REST APIs.
-* Store schedules and reports in a database (e.g., PostgreSQL, Supabase).
-
-### Adding JavaScript
-
-If interactivity is needed (e.g., dynamic map updates, form validation):
-
-* Link JavaScript files in each HTML page.
-* Create a `/js/` folder and include custom scripts as needed.
-
-## Deployment
-
-You can deploy this static frontend using:
-
-* **GitHub Pages**
-* **Vercel**
-* **Netlify**
-* **Custom Hosting**
-
-Just upload all HTML and CSS files as-is or serve them via any static site server.
+A web-based dashboard designed for waste management facilities to efficiently handle user-submitted waste reports, schedule pickups, and oversee operations. This portal complements the Recycle Buddy mobile app developed during GRU Fest 2025.
 
 ---
 
-This README provides a starting point. As your project evolves, you may organize code into `/css`, `/js`, `/assets`, and expand functionality.
+## 📌 Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Customization](#customization)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## 📝 Overview
+
+The Recycle Buddy Web Portal serves as the administrative interface for waste management personnel. Built with HTML and CSS, it provides tools to:
+
+- Authenticate and manage facility staff access.
+- Visualize reported waste locations on an interactive map.
+- Schedule and monitor waste pickups.
+- Maintain facility profiles and operational data.
+
+This portal is part of a larger ecosystem, including a React-based mobile application for users to report waste and request pickups.
+
+---
+
+## 🚀 Features
+
+- **User Authentication**: Secure login system for facility staff.
+- **Interactive Map View**: Display and manage reported waste locations.
+- **Pickup Scheduling**: Create, view, and manage pickup schedules.
+- **Pickup Tracking**: Monitor the status of scheduled pickups.
+- **Facility Profile Management**: Update and maintain facility information.
+
+---
+
+## 📁 Project Structure
+
+```plaintext
+Recyle-Buddy-Website/
+├── index.html                 # Landing page
+├── login.html                 # Staff login interface
+├── map-view.html              # Map displaying reported waste
+├── schedule-pickup.html       # Form to schedule new pickups
+├── my-scheduled-pickups.html  # List of scheduled pickups
+├── track-pickup.html          # Track pickup statuses
+├── facility-profile.html      # Facility information management
+├── styles.css                 # Styling for the portal
+└── README.md                  # Project documentation
+```
+
+---
+
+## 🛠️ Installation
+
+To set up the project locally:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/manupratap15/Recyle-Buddy-Website.git
+   ```
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd Recyle-Buddy-Website
+   ```
+
+3. **Open `index.html` in your preferred web browser**.
+
+*Note*: As this is a static HTML/CSS project, no additional dependencies or servers are required.
+
+---
+
+## 📖 Usage
+
+Upon opening the portal:
+
+1. **Login**: Access the portal via `login.html` using authorized credentials.
+2. **Dashboard**: Navigate through the dashboard to view maps, schedule pickups, and manage facility data.
+3. **Map Interaction**: Use `map-view.html` to visualize and interact with reported waste locations.
+4. **Scheduling**: Create new pickup schedules through `schedule-pickup.html` and monitor them via `my-scheduled-pickups.html`.
+5. **Tracking**: Track the status of pickups in real-time using `track-pickup.html`.
+6. **Profile Management**: Update facility information through `facility-profile.html`.
+
+---
+
+## 🎨 Customization
+
+To tailor the portal to specific needs:
+
+- **Styling**: Modify `styles.css` to change the visual appearance.
+- **Content**: Edit the HTML files to update text, images, or layout.
+- **Functionality**: Integrate JavaScript or backend services to add dynamic features or connect to databases.
+
+---
+
+## 🚀 Deployment
+
+Since the project comprises static files, it can be deployed on various platforms:
+
+- **GitHub Pages**: Host directly from the GitHub repository.
+- **Netlify**: Drag and drop the project folder or connect the repository for continuous deployment.
+- **Vercel**: Import the project for seamless deployment.
+
+*Ensure that all relative paths are correctly set for the chosen hosting platform.*
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. **Fork the repository**.
+2. **Create a new branch**:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+
+3. **Commit your changes**:
+   ```bash
+   git commit -m "Add YourFeature"
+   ```
+
+4. **Push to the branch**:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+
+5. **Open a Pull Request**.
+
+Please ensure your code adheres to the project's coding standards and includes appropriate documentation.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
