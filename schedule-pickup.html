@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Pickup - Recycle Buddy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="recycle-icon">
+                        <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
+                        <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12" />
+                        <path d="m14 16-3 3 3 3" />
+                        <path d="M8.293 13.596 4.5 9.497l1.413-1.414" />
+                        <path d="m7.49 9.5 6.364-6.364a1.83 1.83 0 0 1 2.588 0 1.83 1.83 0 0 1 0 2.588L15.1 7.067" />
+                        <path d="m14 3 3 3-3 3" />
+                    </svg>
+                </div>
+                <h1>Recycle Buddy</h1>
+                <span class="portal-badge">Facility Portal</span>
+            </div>
+            <nav class="desktop-nav">
+                <a href="index.html">Available Pickups</a>
+                <a href="my-scheduled-pickups.html">My Scheduled Pickups</a>
+                <a href="facility-profile.html">Facility Profile</a>
+                <a href="login.html">Logout</a>
+            </nav>
+            <button class="mobile-menu-button" onclick="toggleMobileMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Available Pickups</a>
+        <a href="my-scheduled-pickups.html">My Scheduled Pickups</a>
+        <a href="facility-profile.html">Facility Profile</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h2>Schedule Pickup</h2>
+                <p>Schedule a waste pickup for Report #<span id="reportId">1</span></p>
+            </div>
+
+            <div class="schedule-container">
+                <div class="schedule-section">
+                    <h3>Pickup Details</h3>
+                    <div class="report-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Waste Type:</span>
+                            <span class="summary-value" id="wasteType">General Waste</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Address:</span>
+                            <span class="summary-value" id="address">123 Main St, Anytown</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Description:</span>
+                            <span class="summary-value" id="description">Plastic waste and cardboard boxes</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Distance:</span>
+                            <span class="summary-value" id="distance">1.2 miles away</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-section">
+                    <h3>Select Pickup Date & Time</h3>
+                    <form id="scheduleForm" class="schedule-form">
+                        <div class="form-group">
+                            <label for="pickupDate">Pickup Date</label>
+                            <input type="date" id="pickupDate" class="form-control" required min="">
+                        </div>
+                        <div class="form-group">
+                            <label for="pickupTime">Pickup Time</label>
+                            <select id="pickupTime" class="form-control" required>
+                                <option value="">Select a time slot</option>
+                                <option value="morning">Morning (8:00 AM - 12:00 PM)</option>
+                                <option value="afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
+                                <option value="evening">Evening (4:00 PM - 8:00 PM)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vehicleType">Vehicle Type</label>
+                            <select id="vehicleType" class="form-control" required>
+                                <option value="">Select vehicle type</option>
+                                <option value="standard">Standard Truck</option>
+                                <option value="large">Large Truck</option>
+                                <option value="specialized">Specialized Equipment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Special Instructions (Optional)</label>
+                            <textarea id="notes" class="form-control" rows="3" placeholder="Enter any special instructions or notes for the pickup"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <a href="index.html" class="btn btn-outline">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Confirm Pickup</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Get report ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const reportId = urlParams.get('report') || '1';
+        
+        // Update the UI with the report ID
+        document.getElementById('reportId').textContent = reportId;
+        
+        // Set minimum date to today
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        document.getElementById('pickupDate').min = formattedDate;
+        
+        // In a real application, you would fetch the report details from an API
+        // and update the UI accordingly. For this demo, we'll use hardcoded data.
+        const reportData = {
+            '1': {
+                type: 'General Waste',
+                address: '123 Main St, Anytown',
+                description: 'Plastic waste and cardboard boxes',
+                distance: '1.2 miles away'
+            },
+            '2': {
+                type: 'E-Waste',
+                address: '456 Oak Ave, Somewhere',
+                description: 'Old computers and electronic devices',
+                distance: '2.5 miles away'
+            },
+            '3': {
+                type: 'General Waste',
+                address: '789 Pine St, Nowhere',
+                description: 'Garden waste and old furniture',
+                distance: '0.8 miles away'
+            },
+            '4': {
+                type: 'E-Waste',
+                address: '101 Elm St, Elsewhere',
+                description: 'Broken laptops and old phones',
+                distance: '3.1 miles away'
+            }
+        };
+        
+        // Update the UI with the report data
+        if (reportData[reportId]) {
+            const data = reportData[reportId];
+            document.getElementById('wasteType').textContent = data.type;
+            document.getElementById('address').textContent = data.address;
+            document.getElementById('description').textContent = data.description;
+            document.getElementById('distance').textContent = data.distance;
+        }
+        
+        // Handle form submission
+        document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const pickupDate = document.getElementById('pickupDate').value;
+            const pickupTime = document.getElementById('pickupTime').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const notes = document.getElementById('notes').value;
+            
+            // In a real application, you would send this data to an API
+            // For this demo, we'll just show an alert and redirect
+            alert(`Pickup scheduled for ${pickupDate} (${pickupTime})`);
+            window.location.href = 'my-scheduled-pickups.html';
+        });
+    </script>
+</body>
+</html>

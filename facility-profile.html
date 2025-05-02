@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facility Profile - Recycle Buddy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="recycle-icon">
+                        <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
+                        <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12" />
+                        <path d="m14 16-3 3 3 3" />
+                        <path d="M8.293 13.596 4.5 9.497l1.413-1.414" />
+                        <path d="m7.49 9.5 6.364-6.364a1.83 1.83 0 0 1 2.588 0 1.83 1.83 0 0 1 0 2.588L15.1 7.067" />
+                        <path d="m14 3 3 3-3 3" />
+                    </svg>
+                </div>
+                <h1>Recycle Buddy</h1>
+                <span class="portal-badge">Facility Portal</span>
+            </div>
+            <nav class="desktop-nav">
+                <a href="index.html">Available Pickups</a>
+                <a href="my-scheduled-pickups.html">My Scheduled Pickups</a>
+                <a href="facility-profile.html" class="active">Facility Profile</a>
+                <a href="login.html">Logout</a>
+            </nav>
+            <button class="mobile-menu-button" onclick="toggleMobileMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Available Pickups</a>
+        <a href="my-scheduled-pickups.html">My Scheduled Pickups</a>
+        <a href="facility-profile.html" class="active">Facility Profile</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h2>Facility Profile</h2>
+                <p>Manage your facility information and preferences</p>
+            </div>
+
+            <div class="profile-container">
+                <div class="profile-section">
+                    <h3>Facility Information</h3>
+                    <form class="profile-form">
+                        <div class="form-group">
+                            <label for="facilityName">Facility Name</label>
+                            <input type="text" id="facilityName" value="EcoWaste Processing Center" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="facilityAddress">Address</label>
+                            <input type="text" id="facilityAddress" value="1250 Industrial Blvd, Greenville" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="facilityPhone">Phone Number</label>
+                            <input type="tel" id="facilityPhone" value="(555) 123-4567" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="facilityEmail">Email</label>
+                            <input type="email" id="facilityEmail" value="contact@ecowaste.example.com" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="facilityType">Facility Type</label>
+                            <select id="facilityType" class="form-control">
+                                <option selected>Recycling Center</option>
+                                <option>Waste Transfer Station</option>
+                                <option>Landfill</option>
+                                <option>Composting Facility</option>
+                                <option>Hazardous Waste Facility</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Accepted Waste Types</h3>
+                    <form class="profile-form">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="generalWaste" checked>
+                                <label for="generalWaste">General Waste</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="eWaste" checked>
+                                <label for="eWaste">E-Waste</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="organicWaste" checked>
+                                <label for="organicWaste">Organic Waste</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hazardousWaste">
+                                <label for="hazardousWaste">Hazardous Waste</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="constructionDebris" checked>
+                                <label for="constructionDebris">Construction Debris</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="medicalWaste">
+                                <label for="medicalWaste">Medical Waste</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Waste Types</button>
+                    </form>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Operating Hours</h3>
+                    <form class="profile-form">
+                        <div class="hours-group">
+                            <div class="hours-row">
+                                <span class="day">Monday</span>
+                                <input type="time" value="08:00" class="time-input">
+                                <span class="to">to</span>
+                                <input type="time" value="17:00" class="time-input">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Tuesday</span>
+                                <input type="time" value="08:00" class="time-input">
+                                <span class="to">to</span>
+                                <input type="time" value="17:00" class="time-input">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Wednesday</span>
+                                <input type="time" value="08:00" class="time-input">
+                                <span class="to">to</span>
+                                <input type="time" value="17:00" class="time-input">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Thursday</span>
+                                <input type="time" value="08:00" class="time-input">
+                                <span class="to">to</span>
+                                <input type="time" value="17:00" class="time-input">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Friday</span>
+                                <input type="time" value="08:00" class="time-input">
+                                <span class="to">to</span>
+                                <input type="time" value="17:00" class="time-input">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Saturday</span>
+                                <input type="time" value="09:00" class="time-input">
+                                <span class="to">to</span>
+                                <input type="time" value="15:00" class="time-input">
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Sunday</span>
+                                <input type="time" value="00:00" class="time-input" disabled>
+                                <span class="to">to</span>
+                                <input type="time" value="00:00" class="time-input" disabled>
+                                <span class="closed">Closed</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Hours</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

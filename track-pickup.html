@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Pickup - Recycle Buddy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="recycle-icon">
+                        <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
+                        <path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12" />
+                        <path d="m14 16-3 3 3 3" />
+                        <path d="M8.293 13.596 4.5 9.497l1.413-1.414" />
+                        <path d="m7.49 9.5 6.364-6.364a1.83 1.83 0 0 1 2.588 0 1.83 1.83 0 0 1 0 2.588L15.1 7.067" />
+                        <path d="m14 3 3 3-3 3" />
+                    </svg>
+                </div>
+                <h1>Recycle Buddy</h1>
+                <span class="portal-badge">Facility Portal</span>
+            </div>
+            <nav class="desktop-nav">
+                <a href="index.html">Available Pickups</a>
+                <a href="my-scheduled-pickups.html">My Scheduled Pickups</a>
+                <a href="facility-profile.html">Facility Profile</a>
+                <a href="login.html">Logout</a>
+            </nav>
+            <button class="mobile-menu-button" onclick="toggleMobileMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Available Pickups</a>
+        <a href="my-scheduled-pickups.html">My Scheduled Pickups</a>
+        <a href="facility-profile.html">Facility Profile</a>
+        <a href="login.html">Logout</a>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h2>Track Pickup</h2>
+                <p>Real-time tracking for Pickup #<span id="pickupId">2</span></p>
+            </div>
+
+            <div class="tracking-container">
+                <div class="tracking-map-container">
+                    <div class="tracking-status-bar">
+                        <div class="status-indicator">
+                            <span class="status-dot active" id="statusDot"></span>
+                            <span class="status-text" id="statusText">In Progress</span>
+                        </div>
+                        <div class="eta-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>ETA: <span id="etaTime">25 minutes</span></span>
+                        </div>
+                    </div>
+                    <div class="tracking-map" id="trackingMap">
+                        <!-- This would be replaced with an actual map in a real application -->
+                        <div class="map-placeholder">
+                            <div class="map-route">
+                                <div class="route-line"></div>
+                                <div class="truck-marker" id="truckMarker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#4CAF50" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M10 17h4V5H2v12h3m12-5h4l3 5v5h-3m-9 0h6m4 0h2v-5m-9 5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-9 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                    </svg>
+                                </div>
+                                <div class="destination-marker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f44336" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="map-overlay">
+                                <div class="map-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color truck"></div>
+                                        <span>Pickup Vehicle</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color destination"></div>
+                                        <span>Pickup Location</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracking-info-container">
+                    <div class="tracking-section">
+                        <h3>Pickup Details</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Pickup ID:</span>
+                                <span class="detail-value">2</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Waste Type:</span>
+                                <span class="detail-value">E-Waste</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Address:</span>
+                                <span class="detail-value">456 Oak Ave, Somewhere</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Scheduled:</span>
+                                <span class="detail-value">May 10, 2024 (Afternoon)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-section">
+                        <h3>Driver Information</h3>
+                        <div class="driver-info">
+                            <div class="driver-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </div>
+                            <div class="driver-details">
+                                <h4>Michael Johnson</h4>
+                                <div class="driver-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star half">★</span>
+                                    <span class="rating-value">4.5</span>
+                                </div>
+                                <p class="driver-vehicle">Vehicle: Waste Management Truck #T-103</p>
+                            </div>
+                            <div class="driver-contact">
+                                <a href="tel:+15551234567" class="btn btn-outline btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg>
+                                    Call
+                                </a>
+                                <button class="btn btn-outline btn-sm" onclick="sendMessage()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    </svg>
+                                    Message
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-section">
+                        <h3>Pickup Progress</h3>
+                        <div class="progress-timeline">
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>Pickup Scheduled</h4>
+                                    <p>May 10, 2024 - 10:15 AM</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>Driver Assigned</h4>
+                                    <p>May 10, 2024 - 12:30 PM</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item active" id="enRouteItem">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>En Route to Pickup</h4>
+                                    <p>May 10, 2024 - 1:45 PM</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="arrivedItem">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>Arrived at Location</h4>
+                                    <p id="arrivedTime">Estimated: 2:10 PM</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item" id="completedItem">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h4>Pickup Completed</h4>
+                                    <p id="completedTime">Estimated: 2:25 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-section">
+                        <h3>Live Updates</h3>
+                        <div class="live-updates" id="liveUpdates">
+                            <div class="update-item">
+                                <div class="update-time">1:45 PM</div>
+                                <div class="update-content">Driver is en route to your location.</div>
+                            </div>
+                            <div class="update-item">
+                                <div class="update-time">1:30 PM</div>
+                                <div class="update-content">Your pickup has been assigned to Michael Johnson.</div>
+                            </div>
+                            <div class="update-item">
+                                <div class="update-time">10:15 AM</div>
+                                <div class="update-content">Pickup scheduled for today between 12:00 PM - 4:00 PM.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-actions">
+                        <a href="my-scheduled-pickups.html" class="btn btn-outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m12 19-7-7 7-7" />
+                                <path d="M19 12H5" />
+                            </svg>
+                            Back to Pickups
+                        </a>
+                        <button class="btn btn-danger" onclick="cancelPickup()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 6 6 18" />
+                                <path d="m6 6 12 12" />
+                            </svg>
+                            Cancel Pickup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
+        function sendMessage() {
+            alert("Message feature would open a chat with the driver.");
+        }
+
+        function cancelPickup() {
+            if (confirm("Are you sure you want to cancel this pickup? The driver is already en route.")) {
+                alert("Pickup has been cancelled. The driver will be notified.");
+                window.location.href = "my-scheduled-pickups.html";
+            }
+        }
+
+        // Simulated real-time updates
+        let etaMinutes = 25;
+        let truckPosition = 0;
+        const statusStages = ['en-route', 'arrived', 'completed'];
+        let currentStage = 0;
+
+        function updateTruckPosition() {
+            truckPosition += 1;
+            if (truckPosition <= 100) {
+                document.getElementById('truckMarker').style.left = `${truckPosition}%`;
+                
+                // Update ETA
+                etaMinutes = Math.max(0, 25 - Math.floor(truckPosition / 4));
+                document.getElementById('etaTime').textContent = etaMinutes > 0 ? 
+                    `${etaMinutes} minute${etaMinutes !== 1 ? 's' : ''}` : 
+                    'Arrived';
+                
+                // Update status based on position
+                if (truckPosition >= 95 && currentStage < 1) {
+                    currentStage = 1;
+                    updateStatus('arrived');
+                }
+                
+                setTimeout(updateTruckPosition, 1000); // Update every second
+            } else {
+                // Truck has arrived and completed pickup
+                if (currentStage < 2) {
+                    currentStage = 2;
+                    updateStatus('completed');
+                }
+            }
+        }
+
+        function updateStatus(status) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            if (status === 'arrived') {
+                // Update status indicator
+                statusDot.className = 'status-dot arrived';
+                statusText.textContent = 'Arrived';
+                
+                // Update timeline
+                document.getElementById('enRouteItem').classList.remove('active');
+                document.getElementById('arrivedItem').classList.add('active', 'completed');
+                
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                document.getElementById('arrivedTime').textContent = timeString;
+                
+                // Add live update
+                addLiveUpdate(`Driver has arrived at your location.`);
+            } else if (status === 'completed') {
+                // Update status indicator
+                statusDot.className = 'status-dot completed';
+                statusText.textContent = 'Completed';
+                
+                // Update timeline
+                document.getElementById('arrivedItem').classList.remove('active');
+                document.getElementById('completedItem').classList.add('active', 'completed');
+                
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                document.getElementById('completedTime').textContent = timeString;
+                
+                // Add live update
+                addLiveUpdate(`Pickup has been completed successfully.`);
+            }
+        }
+
+        function addLiveUpdate(message) {
+            const updatesContainer = document.getElementById('liveUpdates');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const updateItem = document.createElement('div');
+            updateItem.className = 'update-item new';
+            
+            const updateTime = document.createElement('div');
+            updateTime.className = 'update-time';
+            updateTime.textContent = timeString;
+            
+            const updateContent = document.createElement('div');
+            updateContent.className = 'update-content';
+            updateContent.textContent = message;
+            
+            updateItem.appendChild(updateTime);
+            updateItem.appendChild(updateContent);
+            
+            updatesContainer.insertBefore(updateItem, updatesContainer.firstChild);
+            
+            // Animate the new update
+            setTimeout(() => {
+                updateItem.classList.remove('new');
+            }, 100);
+        }
+
+        // Start the simulation when the page loads
+        window.onload = function() {
+            // Add a small delay to make it feel more realistic
+            setTimeout(() => {
+                addLiveUpdate("Driver is 25 minutes away from your location.");
+                updateTruckPosition();
+            }, 2000);
+            
+            // Add random updates periodically
+            const updates = [
+                "Driver is taking the fastest route to your location.",
+                "Traffic is clear on the route to your location.",
+                "Driver has completed a pickup nearby and is heading to you next.",
+                "Your pickup is on schedule."
+            ];
+            
+            let updateIndex = 0;
+            setInterval(() => {
+                if (currentStage < 2 && Math.random() > 0.5) {
+                    addLiveUpdate(updates[updateIndex % updates.length]);
+                    updateIndex++;
+                }
+            }, 45000); // Add a random update every 45 seconds
+        };
+    </script>
+
+    <style>
+        /* Additional styles for the tracking page */
+        .tracking-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .tracking-map-container {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tracking-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #2196F3;
+        }
+
+        .status-dot.active {
+            background-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+        }
+
+        .status-dot.arrived {
+            background-color: #FF9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+        }
+
+        .status-dot.completed {
+            background-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .eta-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .tracking-map {
+            height: 300px;
+            position: relative;
+            background-color: #f5f5f5;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-route {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+        }
+
+        .route-line {
+            width: 100%;
+            height: 100%;
+            background-color: #ddd;
+            position: relative;
+        }
+
+        .truck-marker {
+            position: absolute;
+            top: -12px;
+            left: 0;
+            transition: left 1s linear;
+        }
+
+        .destination-marker {
+            position: absolute;
+            top: -12px;
+            right: 0;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-color.truck {
+            background-color: #4CAF50;
+        }
+
+        .legend-color.destination {
+            background-color: #f44336;
+        }
+
+        .tracking-info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tracking-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tracking-section h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .driver-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .driver-details {
+            flex: 1;
+        }
+
+        .driver-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .driver-rating {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 5px;
+        }
+
+        .star {
+            color: #FFC107;
+        }
+
+        .star.half {
+            position: relative;
+            display: inline-block;
+        }
+
+        .star.half:after {
+            content: "★";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            overflow: hidden;
+            color: #e0e0e0;
+        }
+
+        .rating-value {
+            margin-left: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .driver-vehicle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .driver-contact {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+
+        .progress-timeline:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 15px;
+            width: 2px;
+            background-color: #e0e0e0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid #e0e0e0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-item.completed .timeline-marker {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .timeline-item.completed .timeline-marker:after {
+            content: "✓";
+            color: white;
+            font-size: 14px;
+        }
+
+        .timeline-item.active .timeline-marker {
+            border-color: #2196F3;
+            background-color: #fff;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .live-updates {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .update-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .update-item.new {
+            background-color: #e3f2fd;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .update-time {
+            font-weight: 500;
+            min-width: 60px;
+            color: #666;
+        }
+
+        .update-content {
+            flex: 1;
+        }
+
+        .tracking-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        /* Responsive styles */
+        @media (min-width: 992px) {
+            .tracking-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .tracking-map {
+                height: 400px;
+            }
+        }
+    </style>
+</body>
+</html>
