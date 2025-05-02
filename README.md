@@ -1,5 +1,6 @@
 # Recycle Web Portal
 
+This is the website for Recycle Buddy App we created in GRU Fest in 2025, This is a HTML/CSS website and we created the app in React.
 A simple web portal for waste management facilities to view user-submitted waste reports, schedule pickups, and manage their operations.
 
 ## Table of Contents
